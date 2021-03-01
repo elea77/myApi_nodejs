@@ -55,27 +55,41 @@ exports.getOne = (req, res) => {
 
 exports.login = (req, res) => {
     User.findOne({email: req.body.email})
-    .then(user => {
-        if (!user) {
-            return res.status(401).json({ error: 'user not found'})
+    .then((data) => {
+        if (!data) {
+            return res.status(401).send({
+                auth: false,
+                toke: null,
+                message: `No user find with email ${req.body.email}`
+            });
         }
-        bcrypt.compare(req.body.password, user.password)
-            .then(comp =>{
-                if(!comp){
-                    return res.status(401).json({ error: 'password wrong'})
-                }
-                res.status(200).json({
-                    userId: user._id,
-                    token: jwt.sign(
-                        { userId: user._id },
-                        'supersecret',
-                        { expiresIn: 86400 },
-                        
-                    ),
-                    auth: true
-                });
-            })
-            .catch(error => res.status(500).json({ error }))
-        })
-        .catch(error => res.status(500).json({error}))
+
+        let passwordIsValid = bcrypt.compareSync(req.body.password, data.password);
+
+        if (!passwordIsValid) {
+            return res.status(401).send({
+                auth: false,
+                toke: null,
+                message: "Password is not valid"
+            });
+        }
+
+        let userToken = jwt.sign(
+        {
+            id:data._id
+        }, 
+        'supersecret',
+        {expiresIn:86400}
+        );
+
+        res.send({
+            auth: true,
+            token: userToken,
+        });
+
+    })
+    .catch((err) => {
+        res.send(err);
+    });
 }
+
