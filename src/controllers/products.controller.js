@@ -39,17 +39,16 @@ exports.getAll = (req, res) => {
     );
 }
 
+
 exports.getOne = (req, res) => {
-    var id = req.query.id;
-    Product.findOne({'id': id}).then(
-        (data) => {
-          res.status(200).json(data);
-        }
-    ).catch(
-        (error) => {
-          res.status(400).json({
-            error: error
-          });
-        }
-    );
+    var id = req.params.id;
+    Product.findById(id)
+    .then((data) => {
+        res.send(data);
+
+    })
+    .catch((err) => {
+        console.log(err.message);
+        res.send(err);
+    })
 }
