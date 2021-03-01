@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const brcypt = require('bcrypt');
 
 exports.create = (req, res) => {
     const user = new User({
@@ -23,4 +24,19 @@ exports.create = (req, res) => {
         })
     })
 
+}
+
+exports.getOne = (req, res) => {
+    var id = req.query.id;
+    User.findOne({'id': id}).then(
+        (data) => {
+          res.status(200).json(data);
+        }
+    ).catch(
+        (error) => {
+          res.status(400).json({
+            error: error
+          });
+        }
+    );
 }
