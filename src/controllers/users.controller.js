@@ -41,15 +41,17 @@ exports.create = (req, res) => {
 
 
 exports.getOne = (req, res) => {
-    var id = req.params.id;
-    User.findById(id)
+    User.findById(req.params.id)
     .then((data) => {
-        res.send(data);
+      if (!data) {
+        res.status(404).send({
+          message: `User with id ${req.params.id} not found`,
+          // message:"User with id" + req.params.id +"not found"
+        });
+      }
+      res.send(data);
     })
-    .catch((err) => {
-        console.log(err.message);
-        res.send(err);
-    })
+    .catch((err) => res.send(err));
 }
 
 
@@ -59,7 +61,7 @@ exports.login = (req, res) => {
         if (!data) {
             return res.status(401).send({
                 auth: false,
-                toke: null,
+                token: null,
                 message: `No user find with email ${req.body.email}`
             });
         }
@@ -69,17 +71,15 @@ exports.login = (req, res) => {
         if (!passwordIsValid) {
             return res.status(401).send({
                 auth: false,
-                toke: null,
+                token: null,
                 message: "Password is not valid"
             });
         }
 
         let userToken = jwt.sign(
-        {
-            id:data._id
-        }, 
-        'supersecret',
-        {expiresIn:86400}
+            {id:data._id}, 
+            'supersecret',
+            {expiresIn:86400}
         );
 
         res.send({
