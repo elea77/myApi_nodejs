@@ -40,7 +40,7 @@ exports.create = (req, res) => {
 
 
 exports.getOne = (req, res) => {
-    User.findById(req.params.id).populate("orders")
+    User.findById(req.params.id)
     .then((data) => {
       if (!data) {
         res.status(404).send({
