@@ -44,3 +44,17 @@ exports.getAll = (req, res) => {
         }
     );
 }
+
+
+exports.getOne = (req, res) => {
+    var id = req.params.id;
+    Order.findById(id)
+    .then((data) => {
+        res.send(data);
+
+    })
+    .catch((err) => {
+        console.log(err.message);
+        res.send(err);
+    })
+}
