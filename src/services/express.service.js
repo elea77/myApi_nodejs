@@ -6,6 +6,7 @@ const cors = require('cors');
 
 exports.start = () => {
     
+    // const port = process.env.PORT;
     const port = 3000;
     app.use(cors());
     app.use(bodyParser.json());

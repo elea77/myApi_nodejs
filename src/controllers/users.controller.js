@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 exports.create = (req, res) => {
 
-    bcrypt.hash(req.body.password, 15)
+    bcrypt.hash(req.body.password, 10)
     .then(hash => {
         const user = new User({
             firstName: req.body.firstName,
@@ -16,7 +16,6 @@ exports.create = (req, res) => {
             .then((data) => {
                 let userToken = jwt.sign({
                     id: data._id,
-
                 },
                 'supersecret',
                 {
