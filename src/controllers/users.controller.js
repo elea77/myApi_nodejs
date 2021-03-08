@@ -21,7 +21,7 @@ exports.create = (req, res) => {
                 {
                     expiresIn: 86400,
                 }
-                );
+            );
             res.send({
             token:userToken,
              auth: true
