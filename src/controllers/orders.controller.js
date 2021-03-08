@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 
 exports.getAll = (req, res) => {
     Order.find({})
-    .populate('productss')
+    .populate('products')
     .populate('user')
     .then(
         (data) => {
