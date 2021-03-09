@@ -55,40 +55,46 @@ exports.getOne = (req, res) => {
 
 
 exports.login = (req, res) => {
-    User.findOne({email: req.body.email})
-    .then((data) => {
-        if (!data) {
-            return res.status(401).send({
-                auth: false,
-                token: null,
-                message: `No user find with email ${req.body.email}`
-            });
-        }
-
-        let passwordIsValid = bcrypt.compareSync(req.body.password, data.password);
-
-        if (!passwordIsValid) {
-            return res.status(401).send({
-                auth: false,
-                token: null,
-                message: "Password is not valid"
-            });
-        }
-
-        let userToken = jwt.sign(
-            {id:data._id}, 
-            'supersecret',
-            {expiresIn:86400}
-        );
-
-        res.send({
-            auth: true,
-            token: userToken,
-        });
-
+    User.findOne({
+      email: req.body.email,
     })
-    .catch((err) => {
+        .then((data) => {
+          
+        if (!data) {
+          return res.status(404).send({
+            auth: false,
+            token: null,
+            message: `No user find with email ${req.body.email}`,
+          });
+        }
+  
+        let passwordIsValid = bcrypt.compareSync(
+          req.body.password,
+          data.password
+        );
+  
+        if (!passwordIsValid) {
+          return res.status(401).send({
+            auth: false,
+            token: null,
+            message: 'password is not valid',
+          });
+        }
+  
+        let userToken = jwt.sign(
+          {
+            id: data._id,
+          },
+          'supersecret',
+          {expiresIn: 86400}
+        );
+  
+        res.send({
+          auth: true,
+          token: userToken,
+        });
+      })
+      .catch((err) => {
         res.send(err);
-    });
-}
-
+      });
+  };
