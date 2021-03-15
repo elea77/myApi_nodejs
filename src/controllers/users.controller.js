@@ -10,7 +10,10 @@ exports.create = (req, res) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            password: hash
+            password: hash,
+            phone: req.body.phone,
+            isAdmin: false,
+            address: req.body.address
         });
         user.save()
             .then((data) => {

@@ -1,3 +1,4 @@
+const { Number } = require('core-js');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -22,6 +23,33 @@ const userSchema = new Schema({
         required: true,
         minlength: 4,
         unique: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    address: {
+        type: Object,
+        zip: {
+            type: Number,
+            required: true
+        },
+        street: {
+            type: String,
+            required: true
+        },
+        city: {
+            type: String,
+            required: true
+        },
+        country: {
+            type: String,
+            required: true
+        }
     },
     orders: [{
         type: Schema.Types.ObjectId,
