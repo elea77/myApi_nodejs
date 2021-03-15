@@ -23,19 +23,6 @@ const userSchema = new Schema({
         minlength: 4,
         unique: true
     },
-    isAdmin: {
-        type: Boolean,
-        required: true
-    },
-    phone: {
-        type: Number,
-        required: false,
-        unique: true
-    },
-    address: {
-        type: String,
-        required: true
-    },
     orders: [{
         type: Schema.Types.ObjectId,
         ref: 'Order'
