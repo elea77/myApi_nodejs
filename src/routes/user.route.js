@@ -7,6 +7,7 @@ const validationSchema = require('../middlewares/users.validation');
 // router.post('/users', user.create);
 router.post('/users', validationSchema, user.create);
 router.get('/users/:id', verifyToken, user.getOne);
+router.put('/users/:id', verifyToken, user.updateOne);
 router.post('/login', user.login);
 
 module.exports = router;

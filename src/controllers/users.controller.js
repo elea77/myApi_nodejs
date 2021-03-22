@@ -61,43 +61,73 @@ exports.login = (req, res) => {
     User.findOne({
       email: req.body.email,
     })
-        .then((data) => {
+    .then((data) => {
           
-        if (!data) {
-          return res.status(404).send({
-            auth: false,
-            token: null,
-            message: `No user find with email ${req.body.email}`,
-          });
-        }
-  
-        let passwordIsValid = bcrypt.compareSync(
-          req.body.password,
-          data.password
-        );
-  
-        if (!passwordIsValid) {
-          return res.status(401).send({
-            auth: false,
-            token: null,
-            message: 'password is not valid',
-          });
-        }
-  
-        let userToken = jwt.sign(
-          {
-            id: data._id,
-          },
-          'supersecret',
-          {expiresIn: 86400}
-        );
-  
-        res.send({
-          auth: true,
-          token: userToken,
-        });
-      })
-      .catch((err) => {
-        res.send(err);
+    if (!data) {
+      return res.status(404).send({
+        auth: false,
+          token: null,
+          message: `No user find with email ${req.body.email}`,
       });
-  };
+    }
+  
+    let passwordIsValid = bcrypt.compareSync(
+      req.body.password,
+      data.password
+    );
+  
+    if (!passwordIsValid) {
+      return res.status(401).send({
+        auth: false,
+        token: null,
+        message: 'password is not valid',
+      });
+    }
+  
+    let userToken = jwt.sign(
+      {
+        id: data._id,
+      },
+      'supersecret',
+        {expiresIn: 86400}
+      );
+  
+      res.send({
+        auth: true,
+        token: userToken,
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+};
+
+
+exports.updateOne = (req, res) => {
+  var user = User.findById(req.params.id)
+	
+  User.findByIdAndUpdate(
+    req.params.id,
+    {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      isAdmin: false,
+      address: req.body.address
+    }
+  )
+  .then((data) => {
+    user
+    res.send({
+      user: data,
+      update: true,
+    })
+  })
+  .catch((err) => {
+    res.status(500).send({
+      error: 500,
+      message: err.message || "NULL"
+      })
+  })
+  
+};
