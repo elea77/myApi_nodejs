@@ -105,24 +105,20 @@ exports.login = (req, res) => {
 
 exports.updateOne = (req, res) => {
   var user = User.findById(req.params.id)
-	bcrypt.hash(req.body.password, 10)
-  .then(hash => {
+
   User.findByIdAndUpdate(
     req.params.id,
     {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      password: hash,
       phone: req.body.phone,
       address: req.body.address
     }
   )
-  })
   .then((data) => {
     user
     res.send({
-      user: data,
-      update: true,
+      user: data
     })
   })
   .catch((err) => {
