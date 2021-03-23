@@ -4,8 +4,8 @@ const user = require('../controllers/users.controller');
 const verifyToken = require('../middlewares/verifyToken');
 const validationSchema = require('../middlewares/users.validation');
 
-// router.post('/users', user.create);
 router.post('/users', validationSchema, user.create);
+router.get('/users', user.getAll);
 router.get('/users/:id', verifyToken, user.getOne);
 router.put('/users/:id', verifyToken, user.updateOne);
 router.post('/login', user.login);
