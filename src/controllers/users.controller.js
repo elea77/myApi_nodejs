@@ -112,7 +112,6 @@ exports.updateOne = (req, res) => {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       phone: req.body.phone,
-      isAdmin: false,
       address: req.body.address
     }
   )
