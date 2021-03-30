@@ -12,7 +12,7 @@ exports.create = (req, res) => {
             email: req.body.email,
             password: hash,
             phone: req.body.phone,
-            isAdmin: false,
+            isAdmin: req.body.isAdmin,
             address: req.body.address
         });
         user.save()
