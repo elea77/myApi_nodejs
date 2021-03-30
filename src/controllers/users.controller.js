@@ -36,7 +36,7 @@ exports.create = (req, res) => {
             error: 500,
             message: err.message || "some error occured while creating user"
         })
-        })
+      })
     })
 
 }
@@ -141,5 +141,22 @@ exports.updateOne = (req, res) => {
       message: err.message || "NULL"
       })
   })
+  
+};
+
+
+exports.deleteOne = (req, res) => {
+
+  var user = User.findById(req.params.id)
+  User.remove(user)
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `User with id ${req.params.id} not found`,
+        });
+      }
+      res.send(data);
+    })
+    .catch((err) => res.send(err));
   
 };
