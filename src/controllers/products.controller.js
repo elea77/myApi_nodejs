@@ -52,3 +52,31 @@ exports.getOne = (req, res) => {
         res.send(err);
     })
 }
+
+
+exports.updateOne = (req, res) => {
+    var product = Product.findById(req.params.id)
+  
+    Product.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title,
+        price: req.body.price,
+        description: req.body.description,
+        img: req.body.img
+      }
+    )
+    .then((data) => {
+      product
+      res.send({
+        product: data
+      })
+    })
+    .catch((err) => {
+      res.status(500).send({
+        error: 500,
+        message: err.message || "NULL"
+        })
+    })
+    
+  };
