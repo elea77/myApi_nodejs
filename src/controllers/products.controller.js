@@ -77,6 +77,23 @@ exports.updateOne = (req, res) => {
         error: 500,
         message: err.message || "NULL"
         })
-    })
+  })
     
-  };
+};
+
+
+exports.deleteOne = (req, res) => {
+
+  var product = Product.findById(req.params.id)
+  Product.remove(product)
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Product with id ${req.params.id} not found`,
+        });
+      }
+      res.send(data);
+    })
+    .catch((err) => res.send(err));
+  
+};
