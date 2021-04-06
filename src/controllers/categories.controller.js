@@ -2,10 +2,7 @@ const Category = require('../models/category.model');
 
 exports.create = (req, res) => {
     const category = new Category({
-        title: req.body.title,
-        price: req.body.price,
-        description: req.body.description,
-        img: req.body.img
+        title: req.body.title
     });
 
     category.save()
