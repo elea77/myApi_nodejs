@@ -11,7 +11,7 @@ exports.create = (req, res) => {
 
     order.save()
     .then((data) => {
-        User.findByIdAndUpdate(req.body.user, {orders: data._id}).then(() => {
+        User.findByIdAndUpdate(req.body.user, {$push: {orders: data._id}}).then(() => {
             res.send({
                 data: data,
             })
