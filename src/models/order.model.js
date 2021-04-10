@@ -4,10 +4,16 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
     total: {
         type: Number,
-        required: true,
-        lowercase: true,
-        unique: true
+        required: true
     },
+    status: {
+        type: String,
+        required: true
+    },
+    // date: {
+    //     type: Date,
+    //     required: true
+    // },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
