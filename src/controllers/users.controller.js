@@ -18,9 +18,9 @@ exports.create = (req, res) => {
         user.save()
             .then((data) => {
                 let userToken = jwt.sign({
-                    id: data._id,
+                    id: data._id
                 },
-                'supersecret',
+                process.env.SECRET_JWT,
                 {
                     expiresIn: 86400,
                 }
@@ -101,8 +101,9 @@ exports.login = (req, res) => {
     let userToken = jwt.sign(
       {
         id: data._id,
+        isAdmin: data.isAdmin
       },
-      'supersecret',
+      process.env.SECRET_JWT,
         {expiresIn: 86400}
       );
   
