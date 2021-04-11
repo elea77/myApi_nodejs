@@ -1,5 +1,5 @@
 const stripe = require('stripe')('sk_test_51IYAwmJ5UFJGtqNY5XAkZV7YcOxeb9DBVOYHBpFEQw7Hl5sUOm7Y0MtEEzH8ZMlqhS6SXLlzHYFmxoI1cWvfpcpL00u6751kXb')
-
+require("regenerator-runtime/runtime");
 
 exports.checkout = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
