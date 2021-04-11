@@ -5,7 +5,8 @@ exports.create = (req, res) => {
         title: req.body.title,
         price: req.body.price,
         description: req.body.description,
-        img: req.body.img
+        img: req.body.img,
+        categories: req.body.categories
     });
 
     product.save()
@@ -63,7 +64,8 @@ exports.updateOne = (req, res) => {
         title: req.body.title,
         price: req.body.price,
         description: req.body.description,
-        img: req.body.img
+        img: req.body.img,
+        categories: req.body.categories
       }
     )
     .then((data) => {
