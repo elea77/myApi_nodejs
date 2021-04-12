@@ -35,3 +35,43 @@ exports.getAll = (req, res) => {
         }
     );
 }
+
+
+exports.getOne = (req, res) => {
+    var id = req.params.id;
+    Category.findById(id)
+    .then((data) => {
+        res.send(data);
+
+    })
+    .catch((err) => {
+        console.log(err.message);
+        res.send(err);
+    })
+}
+
+
+
+exports.updateOne = (req, res) => {
+    var category = Category.findById(req.params.id)
+  
+    Category.findByIdAndUpdate(
+      req.params.id,
+      {
+        title: req.body.title
+      }
+    )
+    .then((data) => {
+      category
+      res.send({
+        category: data
+      })
+    })
+    .catch((err) => {
+      res.status(500).send({
+        error: 500,
+        message: err.message || "NULL"
+        })
+  })
+    
+};
