@@ -17,8 +17,8 @@ exports.checkout = async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: process.env.DB_URI+'/success',
-    cancel_url: process.env.DB_URI+'/cancel',
+    success_url: 'http://localhost:8080//success',
+    cancel_url: 'http://localhost:8080//cancel',
   });
 
   res.json({ id: session.id });
