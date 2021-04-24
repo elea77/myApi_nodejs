@@ -19,8 +19,8 @@ exports.checkout = async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: `${config.stripe.vue_url}/success`,
-    cancel_url: `${config.stripe.vue_url}/cancel`,
+    success_url: `${config.stripe.vue_url}success`,
+    cancel_url: `${config.stripe.vue_url}cancel`,
   });
 
   res.json({ id: session.id });
