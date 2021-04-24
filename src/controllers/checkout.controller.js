@@ -1,5 +1,7 @@
-const stripe = require('stripe')('sk_test_51IYAwmJ5UFJGtqNY5XAkZV7YcOxeb9DBVOYHBpFEQw7Hl5sUOm7Y0MtEEzH8ZMlqhS6SXLlzHYFmxoI1cWvfpcpL00u6751kXb')
+const config = require('../configs/checkout.config');
+const stripe = require('stripe')(config.stripe.sk);
 require("regenerator-runtime/runtime");
+
 
 exports.checkout = async (req, res) => {
   const session = await stripe.checkout.sessions.create({
@@ -17,8 +19,8 @@ exports.checkout = async (req, res) => {
       },
     ],
     mode: 'payment',
-    success_url: 'http://localhost:8080/success',
-    cancel_url: 'http://localhost:8080/cancel',
+    success_url: `${config.stripe.vue_url}/success`,
+    cancel_url: `${config.stripe.vue_url}/cancel`,
   });
 
   res.json({ id: session.id });
